@@ -1,9 +1,6 @@
-"use client";
-
 import styles from "../styles/home.module.css";
 import Image from "next/image";
 import Link from "next/link";
-import Subtitle from "./components/subtitle";
 
 const blogs = [
   {
@@ -74,38 +71,15 @@ const blogs = [
 
 export default function Home() {
   return (
-    <main className={styles.page}>
-
-      {/* <style jsx>
-        {`
-          .home-title{
-            color:red;
-          }
-        `}
-      </style> */}
-
-      <header className={styles.header}>
-        <a href="/" className={styles.logo}>MyBlog</a>
-
-        <nav className={styles.nav}>
-          <Link href="/">Home</Link>
-          <Link href="/about">About</Link>
-          <Link href="/blog">Blog</Link>
-          <Link href="/contact">Contact</Link>
-        </nav>
-      </header>
-
+    <>
       <section className={styles.hero}>
-        <h1 className="home-title">Explore Our Latest Blogs</h1>
-
-        <Subtitle></Subtitle>
-
+        <h1>Explore Our Latest Blogs</h1>
       </section>
 
       <section className={styles.blogSection}>
         <div className={styles.sectionHeading}>
           <h2>Latest Articles</h2>
-          <span>8 Articles</span>
+          <span>{blogs.length} Articles</span>
         </div>
 
         <div className={styles.blogGrid}>
@@ -113,25 +87,24 @@ export default function Home() {
             <article className={styles.card} key={blog.id}>
               <Link href={`/blog/${blog.slug}`} className={styles.imageLink}>
                 <Image
+                  loading="eager"
                   src={blog.image}
                   alt={blog.title}
                   width={600}
                   height={400}
-                  className={styles.blogImage}
+                  sizes="(max-width: 480px) 100vw, (max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
                 />
               </Link>
+
               <div className={styles.cardContent}>
-                <span className={styles.category}>
-                  {blog.category}
-                </span>
+                <span className={styles.category}>{blog.category}</span>
 
                 <h3>
-                  <Link href={`/blog/${blog.slug}`}>
-                    {blog.title}
-                  </Link>
+                  <Link href={`/blog/${blog.slug}`}>{blog.title}</Link>
                 </h3>
 
                 <p>{blog.description}</p>
+
                 <Link href={`/blog/${blog.slug}`} className={styles.readMore}>
                   Read Article →
                 </Link>
@@ -140,10 +113,6 @@ export default function Home() {
           ))}
         </div>
       </section>
-
-      <footer className={styles.footer}>
-        © 2026 MyBlog. All rights reserved.
-      </footer>
-    </main>
+    </>
   );
 }
