@@ -1,0 +1,14 @@
+.page {
+    min-height: 100vh;
+    background: #f8fafc;
+    color: #1e293b;
+    font-family: Arial, sans-serif;
+}
+
+.footer {
+    padding: 25px;
+    text-align: center;
+    color: #64748b;
+    background: #ffffff;
+    border-top: 1px solid #e2e8f0;
+}

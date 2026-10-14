@@ -1,4 +1,7 @@
 .header {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -33,6 +36,14 @@
     color: #2563eb;
 }
 
+/* Consolidated mobile breakpoints (descending order) */
+@media (max-width: 768px) {
+    .nav {
+        gap: 12px;
+        flex-wrap: wrap;
+    }
+}
+
 @media (max-width: 700px) {
     .header {
         flex-direction: column;
@@ -41,12 +52,5 @@
     .nav {
         justify-content: center;
         gap: 16px;
-    }
-}
-
-@media (max-width: 768px) {
-    .nav {
-        gap: 12px;
-        flex-wrap: wrap;
     }
 }

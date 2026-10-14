@@ -1,4 +1,4 @@
-import styles from "../styles/home.module.css";
+import styles from "../styles/Home.module.css";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -73,7 +73,25 @@ export default function Home() {
   return (
     <>
       <section className={styles.hero}>
-        <h1>Explore Our Latest Blogs</h1>
+        <Image
+          src="/here.jpg"
+          alt="Blog hero background"
+          fill
+          priority
+          sizes="100vw"
+          className={styles.heroImage}
+        />
+
+        <div className={styles.overlay}></div>
+
+        <div className={styles.heroContent}>
+          <h1>Explore Our Latest Blogs</h1>
+          <p>
+            <span>
+              Discover useful articles, ideas, and insights.
+            </span>
+          </p>
+        </div>
       </section>
 
       <section className={styles.blogSection}>
@@ -92,7 +110,6 @@ export default function Home() {
                   alt={blog.title}
                   width={600}
                   height={400}
-                  sizes="(max-width: 480px) 100vw, (max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
                 />
               </Link>
 

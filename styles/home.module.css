@@ -20,7 +20,7 @@
 /* Hero & Main Sections */
 .hero,
 .main {
-    max-width: 1200px;
+    /* max-width: 1200px; */
     margin: 0 auto;
     padding: 55px 24px;
     text-align: center;
@@ -193,5 +193,65 @@
 
     .card img {
         height: 200px;
+    }
+}
+
+.hero {
+    position: relative;
+    width: 100%;
+    min-height: 450px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    text-align: center;
+}
+
+.heroImage {
+    object-fit: cover;
+    object-position: center;
+    z-index: 0;
+}
+
+.overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    z-index: 1;
+}
+
+.heroContent {
+    position: relative;
+    z-index: 2;
+    color: #ffffff;
+    padding: 20px;
+}
+
+.heroContent h1 {
+    font-size: clamp(30px, 5vw, 52px);
+    font-weight: 700;
+    margin: 0 0 15px;
+    color: white;
+}
+
+.heroContent p {
+    font-size: 18px;
+    margin: 0;
+}
+
+.heroContent p span {
+    background-color: black;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 10px;
+}
+
+@media (max-width: 600px) {
+    .hero {
+        min-height: 300px;
+    }
+
+    .heroContent p {
+        font-size: 15px;
     }
 }
