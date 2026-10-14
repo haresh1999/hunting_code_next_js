@@ -1,6 +1,9 @@
+"use client";
+
 import styles from "../styles/home.module.css";
 import Image from "next/image";
 import Link from "next/link";
+import Subtitle from "./components/subtitle";
 
 const blogs = [
   {
@@ -72,6 +75,15 @@ const blogs = [
 export default function Home() {
   return (
     <main className={styles.page}>
+
+      {/* <style jsx>
+        {`
+          .home-title{
+            color:red;
+          }
+        `}
+      </style> */}
+
       <header className={styles.header}>
         <a href="/" className={styles.logo}>MyBlog</a>
 
@@ -84,8 +96,10 @@ export default function Home() {
       </header>
 
       <section className={styles.hero}>
-        <h1>Explore Our Latest Blogs</h1>
-        <p>Discover useful articles, ideas, and insights.</p>
+        <h1 className="home-title">Explore Our Latest Blogs</h1>
+
+        <Subtitle></Subtitle>
+
       </section>
 
       <section className={styles.blogSection}>
