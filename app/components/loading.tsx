@@ -1,11 +1,19 @@
-import style from '../css/Loading.module.css'
+import Script from 'next/script';
+import styles from '../css/Loading.module.css';
 
 export default function Loading() {
     return (
         <>
-            <p className={style.loading}>
-                We are Loading PLease holf a second
-            </p>
+            <Script
+                src="/js/loading.js"
+                strategy="afterInteractive"
+            />
+
+            <div
+                id="top-loading-bar"
+                className={styles.topLoadingBar}
+            />
+
         </>
-    )
-};
+    );
+}

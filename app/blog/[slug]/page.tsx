@@ -8,6 +8,40 @@ type Props = {
     params: Promise<{ slug: string }>;
 };
 
+async function getBlog(slug: string) {
+    const res = await fetch(`http://localhost:3000/api/blog/${slug}`);
+
+    if (!res.ok || res.status === 404) {
+        return null;
+    }
+
+    const item = await res.json();
+
+    const blog = item.data;
+
+    if (!blog) {
+        return null;
+    }
+
+    return blog;
+}
+
+export async function generateMetadata({ params }: Props) {
+    const { slug } = await params;
+    const meta = await getBlog(slug);
+
+    if (!meta) {
+        return {
+            title: "My Default Blog Title",
+            description: "Read our latest blog articles.",
+        }
+    }
+    return {
+        title: meta.title || "My Default Blog Title",
+        description: meta.description || "Read our latest blog articles.",
+    }
+}
+
 function BlogNotFound() {
     return (
         <div className={styles.container}>
@@ -33,19 +67,7 @@ function BlogNotFound() {
 
 async function BlogDetailsContent({ params }: Props) {
     const { slug } = await params;
-
-    const res = await fetch(`http://localhost:3000/api/blog/${slug}`);
-
-    if (res.status === 404) {
-        return <BlogNotFound />;
-    }
-
-    if (!res.ok) {
-        throw new Error(`Failed to fetch blog: ${res.status}`);
-    }
-
-    const item = await res.json();
-    const blog = item.data;
+    const blog = await getBlog(slug);
 
     if (!blog) {
         return <BlogNotFound />;
@@ -61,6 +83,7 @@ async function BlogDetailsContent({ params }: Props) {
                         width={600}
                         height={350}
                         className={styles.image}
+                        loading="eager"
                     />
                     <span className={styles.category}>
                         {blog.category}
@@ -87,8 +110,8 @@ async function BlogDetailsContent({ params }: Props) {
 
 export default function BlogDetails({ params }: Props) {
     return (
-        <Suspense fallback={<Loading />}>
+        < Suspense fallback={< Loading />}>
             <BlogDetailsContent params={params} />
-        </Suspense>
+        </Suspense >
     );
 }
