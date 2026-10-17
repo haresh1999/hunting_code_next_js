@@ -3,10 +3,31 @@
 import { useState } from "react";
 import styles from "../css/Contact.module.css"
 
+
 export default function Contact() {
+
+    function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
+        if (event.target.name == 'name') {
+            setName(event.target.value);
+        } else if (event.target.name == 'email') {
+            setEmail(event.target.value);
+
+        } else if (event.target.name == 'phone') {
+            setPhone(event.target.value);
+
+        } else if (event.target.name == 'message') {
+            setMessage(event.target.value);
+        }
+    }
 
     const [loading, setLoading] = useState(false);
     const [status, setStatus] = useState("");
+
+    const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
+    const [phone, setPhone] = useState("");
+    const [message, setMessage] = useState("");
+
 
     async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
@@ -14,15 +35,17 @@ export default function Contact() {
         setLoading(true);
         setStatus("");
 
-        const form = event.currentTarget;
-        const formData = new FormData(form);
+        // const form = event.currentTarget;
+        // const formData = new FormData(form);
 
-        const data = {
-            name: formData.get("name"),
-            email: formData.get("email"),
-            phone: formData.get("phone"),
-            message: formData.get("message"),
-        };
+        // const data = {
+        //     name: formData.get("name"),
+        //     email: formData.get("email"),
+        //     phone: formData.get("phone"),
+        //     message: formData.get("message"),
+        // };
+
+        const data = { name, email, phone, message };
 
         try {
 
@@ -40,8 +63,14 @@ export default function Contact() {
                 throw new Error(result.message || "Failed to send message");
             }
 
+            // if (!result.success) {
+
+            //     setStatus(result.message);
+            //     return;
+            // }
+
             setStatus("Contact submitted successfully!");
-            form.reset();
+            // form.reset();
 
         } catch (error) {
             setStatus(error instanceof Error
@@ -50,6 +79,11 @@ export default function Contact() {
             );
         } finally {
             setLoading(false);
+
+            setName('');
+            setEmail('');
+            setPhone('');
+            setMessage('');
         }
     }
 
@@ -67,8 +101,9 @@ export default function Contact() {
                             id="name"
                             name="name"
                             placeholder="Enter your full name"
-                            required
                             autoComplete="name"
+                            value={name}
+                            onChange={handleChange}
                         />
                     </div>
 
@@ -79,8 +114,9 @@ export default function Contact() {
                             id="email"
                             name="email"
                             placeholder="Enter your email"
-                            required
                             autoComplete="email"
+                            value={email}
+                            onChange={handleChange}
                         />
                     </div>
 
@@ -91,8 +127,9 @@ export default function Contact() {
                             id="phone"
                             name="phone"
                             placeholder="Enter your phone number"
-                            required
                             autoComplete="tel"
+                            value={phone}
+                            onChange={handleChange}
                         />
                     </div>
 
@@ -103,8 +140,9 @@ export default function Contact() {
                             name="message"
                             rows={5}
                             placeholder="Write your message here..."
-                            required
-                        ></textarea>
+                            onChange={handleChange}
+                            value={message}
+                        />
                     </div>
 
                     <button
