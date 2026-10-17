@@ -9,7 +9,7 @@ const blogs = [
         id: 1,
         title: "Getting Started with Web Development",
         category: "Development",
-        description: "Learn the basics of building modern websites.",
+        description: "<h1>Learn the basics of building modern websites.</h1>",
         image: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=600",
         slug: "web-development",
     },

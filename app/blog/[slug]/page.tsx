@@ -65,6 +65,7 @@ function BlogNotFound() {
     );
 }
 
+
 async function BlogDetailsContent({ params }: Props) {
     const { slug } = await params;
     const blog = await getBlog(slug);
@@ -92,9 +93,7 @@ async function BlogDetailsContent({ params }: Props) {
 
                 <div className={styles.content}>
                     <h2 className={styles.title}>{blog.title}</h2>
-                    <p className={styles.description}>
-                        {blog.description}
-                    </p>
+                    <p className={styles.description} dangerouslySetInnerHTML={{ __html: blog.description }} />
 
                     <Link
                         href="/blog"
@@ -103,8 +102,8 @@ async function BlogDetailsContent({ params }: Props) {
                         ← Back to Blogs
                     </Link>
                 </div>
-            </article>
-        </div>
+            </article >
+        </div >
     );
 }
 
