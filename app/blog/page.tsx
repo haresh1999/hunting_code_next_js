@@ -1,18 +1,24 @@
-import { Metadata } from "next";
+import type { Metadata } from "next";
 import styles from "../css/Blog.module.css";
-import { Suspense } from 'react'
 import Image from "next/image";
-import Link from "next/link";
+import BlogList from "../components/BlogList";
+import { Suspense } from "react";
+import Loading from "../components/loading";
 
 export const metadata: Metadata = {
     title: "Welcome To Our New Blog",
     description: "Welcome to our new blog.",
-}
+};
 
-async function BlogList() {
-    const res = await fetch('http://localhost:3000/api/blog');
+async function GetBlogs() {
+    const res = await fetch("http://localhost:3000/api/blog?start=0&limit=4");
+
+    if (!res.ok) {
+        throw new Error("Failed to fetch blogs");
+    }
+
     const items = await res.json();
-    const blogs = items.data;
+
     return (
         <>
             <section className={styles.hero}>
@@ -24,61 +30,24 @@ async function BlogList() {
                     sizes="100vw"
                     className={styles.heroImage}
                 />
-                <div className={styles.overlay}></div>
+
+                <div className={styles.overlay} />
+
                 <div className={styles.heroContent}>
                     <h1>Explore Our Latest Blogs</h1>
-                    <p>
-                        <span>
-                            Discover useful articles, ideas, and insights.
-                        </span>
-                    </p>
+                    <p>Discover useful articles, ideas, and insights.</p>
                 </div>
             </section>
 
-            <section className={styles.blogSection}>
-                <div className={styles.sectionHeading}>
-                    <h2>Latest Articles</h2>
-                    <span>{blogs.length} Articles</span>
-                </div>
-
-                <div className={styles.blogGrid}>
-                    {blogs.map((blog) => (
-                        <article className={styles.card} key={blog.id}>
-                            <Link href={`/blog/${blog.slug}`} className={styles.imageLink}>
-                                <Image
-                                    loading="eager"
-                                    src={blog.image}
-                                    alt={blog.title}
-                                    width={600}
-                                    height={400}
-                                />
-                            </Link>
-
-                            <div className={styles.cardContent}>
-                                <span className={styles.category}>{blog.category}</span>
-
-                                <h3>
-                                    <Link href={`/blog/${blog.slug}`}>{blog.title}</Link>
-                                </h3>
-
-                                <p>{blog.description}</p>
-
-                                <Link href={`/blog/${blog.slug}`} className={styles.readMore}>
-                                    Read Article →
-                                </Link>
-                            </div>
-                        </article>
-                    ))}
-                </div>
-            </section>
+            <BlogList initialBlogs={items.data ?? []} />
         </>
-    )
+    );
 }
 
-export default function Blog() {
+export default async function Blog() {
     return (
-        <Suspense fallback={<div>Loading...</div>}>
-            <BlogList />
+        <Suspense fallback={<Loading />}>
+            <GetBlogs />
         </Suspense>
-    );
+    )
 }
